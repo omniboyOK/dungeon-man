@@ -39,10 +39,31 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.play('demon_idle');
     
     this.scene.add.existing(this);
+
+    this.scene.time.addEvent({
+      delay: 2000,
+      callback: () => {
+        let randomNumber = Math.floor(Math.random() * 4);
+        switch(randomNumber){
+          case 0:
+            this.moveUp();
+            break;
+          case 1: 
+            this.moveDown();
+            break;
+          case 2:
+            this.moveRight();
+          case 3:
+            this.moveLeft();
+        }
+      },
+      callbackScope: this,
+      loop: true
+  })
   }
 
   playRunningAnimation() {
-    this.play("demin_running");
+    this.play("demon_running");
     this.anims.chain("demon_idle");
   }
 

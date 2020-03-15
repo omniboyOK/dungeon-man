@@ -20,7 +20,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
       frameRate: 8,
       repeat: -1
     });
-
     this.scene.anims.create({
       key: "running",
       frames: [
@@ -32,20 +31,28 @@ export default class Player extends Phaser.GameObjects.Sprite {
       frameRate: 8,
       repeat: 0
     });
-
+    //cargamos las animaciones al personaje
     this.anims.load("idle");
     this.anims.load("running");
 
-    this.play('idle');
+    this.play("idle");
 
     // Keyboard refs
-    this.up = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.up = this.scene.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.W
+    );
     this.up.emitOnRepeat = false;
-    this.down = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.down = this.scene.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.S
+    );
     this.down.emitOnRepeat = false;
-    this.left = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.left = this.scene.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.A
+    );
     this.left.emitOnRepeat = false;
-    this.right = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    this.right = this.scene.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.D
+    );
     this.right.emitOnRepeat = false;
 
     // This are the move keys for our player
@@ -64,33 +71,39 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
   }
 
+  //Manejo de animaciones
+  //Hay que crear un manejador de estados que se encargue
   playRunningAnimation() {
     this.play("running");
     this.anims.chain("idle");
   }
-
+  
+  //Funciones del jugador
   moveUp() {
     this.playRunningAnimation();
     this.y -= 32;
   }
+
   moveDown() {
     this.playRunningAnimation();
     this.y += 32;
   }
+
   moveLeft() {
     this.playRunningAnimation();
     this.x -= 32;
     this.flipX = true;
   }
+
   moveRight() {
     this.playRunningAnimation();
     this.x += 32;
     this.flipX = false;
   }
 
-  // On the update cycle, the body of the sprite will be rendered on new position
   update() {
-    //This prevent the player to go out of bounds of the screen
+    //Previene al jugador irse fuera de los bordes de la pantalla
+    //Cuando la pantalla tenga limites, esto no va a ser necesario
     this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
     this.y = Phaser.Math.Clamp(this.y, 0, this.scene.game.config.height);
   }

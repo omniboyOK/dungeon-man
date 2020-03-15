@@ -8,7 +8,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    console.log('estamos en Game') 
+    console.log('Bienvenido a Game') 
   }
 
   create() {

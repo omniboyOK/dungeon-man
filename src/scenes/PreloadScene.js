@@ -1,8 +1,8 @@
 import "phaser";
-import charSheet from '../assets/char/spritesheet.png'
-import charAtlas from '../assets/char/spritesheet.json'
-import tileSheet from '../assets/tiles/spritesheet.png'
-import tileAtlas from '../assets/tiles/spritesheet.json'
+import charSheet from "../assets/char/spritesheet.png";
+import charAtlas from "../assets/char/spritesheet.json";
+import tileSheet from "../assets/tiles/spritesheet.png";
+import tileAtlas from "../assets/tiles/spritesheet.json";
 
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -10,8 +10,8 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
-    console.log("estamos en preload");
-    // display progress bar
+    console.log("Bienvenido a Preload");
+    // barra de progeso
     var progressBar = this.add.graphics();
     var progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
@@ -52,7 +52,7 @@ export default class PreloadScene extends Phaser.Scene {
     });
     assetText.setOrigin(0.5, 0.5);
 
-    // update progress bar
+    // actualiza la barra de progreso
     this.load.on("progress", function(value) {
       percentText.setText(parseInt(value * 100) + "%");
       progressBar.clear();
@@ -86,12 +86,11 @@ export default class PreloadScene extends Phaser.Scene {
     );
 
     // load assets needed in our game
-    this.load.atlas('characters', charSheet, charAtlas);
-    this.load.atlas('tilesheet', tileSheet, tileAtlas);
+    this.load.atlas("characters", charSheet, charAtlas);
+    this.load.atlas("tilesheet", tileSheet, tileAtlas);
   }
 
-  create() {
-  }
+  create() {}
 
   init() {
     this.readyCount = 0;
