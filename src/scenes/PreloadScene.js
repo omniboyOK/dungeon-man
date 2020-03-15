@@ -89,12 +89,6 @@ export default class PreloadScene extends Phaser.Scene {
     // load assets needed in our game
     this.load.atlas("characters", charSheet, charAtlas);
     this.load.atlas("tilesheet", tileSheet, tileAtlas);
-    this.load.scenePlugin({
-      key: "rexgesturesplugin",
-      url:
-        gesturePlugin,
-      sceneKey: "rexGestures"
-    });
   }
 
   create() {}

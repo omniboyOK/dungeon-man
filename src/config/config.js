@@ -1,4 +1,5 @@
 import "phaser";
+import GesturesPlugin from '../scripts/rexgesturesplugin.min.js'
 
 const config = {
   // How the canvas will be rendered
@@ -14,8 +15,17 @@ const config = {
   // A background color
   backgroundColor: "black",
   dom: {
-    createContainer: false,
-}
+    createContainer: false
+  },
+  plugins: {
+    scene: [
+      {
+        key: "rexGestures",
+        plugin: GesturesPlugin,
+        mapping: "rexGestures"
+      }
+    ]
+  }
 };
 
 export default config;

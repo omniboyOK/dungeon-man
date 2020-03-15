@@ -72,6 +72,30 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.moveRight();
     });
     this.scene.add.existing(this);
+
+    //touch inputs
+    this.scene.rexGestures.add
+      .swipe({
+        enable: true,
+        velocityThreshold: 1000,
+        direction: "4dir"
+      })
+      .on(
+        "swipe",
+        swipe => {
+          console.log('swipe swipe')
+          if(swipe.up){
+            this.moveUp();
+          }else if(swipe.down){
+            this.moveDown()
+          }else if(swipe.left){
+            this.moveLeft()
+          }else if(swipe.right){
+            this.moveRight()
+          }
+        },
+        this.scene
+      );
   }
 
   //Manejo de animaciones
@@ -114,8 +138,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     );
     this.y = Phaser.Math.Clamp(
       this.y,
-      736 * 0.5 - 256 +16,
-      736 * 0.5 + 256 -16
+      736 * 0.5 - 256 + 16,
+      736 * 0.5 + 256 - 16
     );
   }
 }
