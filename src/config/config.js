@@ -1,8 +1,15 @@
 import "phaser";
 
-export default {
+const config = {
+  // How the canvas will be rendered
   type: Phaser.AUTO,
-  parent: "phaser-example",
+  pixelArt: true,
+  // The width of our canvas
   width: 800,
-  height: 600
+  // The height of our canvas
+  height: 600,
+  // A background color
+  backgroundColor: "black"
 };
+
+export default config;

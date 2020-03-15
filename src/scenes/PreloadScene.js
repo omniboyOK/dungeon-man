@@ -1,5 +1,8 @@
 import "phaser";
-import phaserLogo from "../assets/logo.png";
+import charSheet from '../assets/char/spritesheet.png'
+import charAtlas from '../assets/char/spritesheet.json'
+import tileSheet from '../assets/tiles/spritesheet.png'
+import tileAtlas from '../assets/tiles/spritesheet.json'
 
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -83,11 +86,11 @@ export default class PreloadScene extends Phaser.Scene {
     );
 
     // load assets needed in our game
-    this.load.image("phaserLogo", phaserLogo);
+    this.load.atlas('characters', charSheet, charAtlas);
+    this.load.atlas('tilesheet', tileSheet, tileAtlas);
   }
 
   create() {
-    this.add.sprite("phaserLogo");
   }
 
   init() {
