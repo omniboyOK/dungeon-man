@@ -36,19 +36,19 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.anims.load("demon_idle");
     this.anims.load("demon_running");
 
-    this.play('demon_idle');
-    
+    this.play("demon_idle");
+
     this.scene.add.existing(this);
 
     this.scene.time.addEvent({
       delay: 2000,
       callback: () => {
         let randomNumber = Math.floor(Math.random() * 4);
-        switch(randomNumber){
+        switch (randomNumber) {
           case 0:
             this.moveUp();
             break;
-          case 1: 
+          case 1:
             this.moveDown();
             break;
           case 2:
@@ -59,7 +59,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       },
       callbackScope: this,
       loop: true
-  })
+    });
   }
 
   playRunningAnimation() {
@@ -86,10 +86,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.flipX = false;
   }
 
-  // On the update cycle, the body of the sprite will be rendered on new position
   update() {
-    //This prevent the player to go out of bounds of the screen
-    this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
-    this.y = Phaser.Math.Clamp(this.y, 0, this.scene.game.config.height);
+    //Previene al jugador irse fuera de los bordes de la pantalla
+    //Cuando la pantalla tenga limites, esto no va a ser necesario
+    this.x = Phaser.Math.Clamp(
+      this.x,
+      this.scene.game.config.width * 0.5 - 256 + 16,
+      this.scene.game.config.width * 0.5 + 256 - 16
+    );
+    this.y = Phaser.Math.Clamp(
+      this.y,
+      736 * 0.5 - 256 + 16,
+      736 * 0.5 + 256 - 16
+    );
   }
 }
