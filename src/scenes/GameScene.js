@@ -16,17 +16,18 @@ export default class GameScene extends Phaser.Scene {
     background.setScale(2, 2);
     this.player = new Player(
       this,
-      256,
-      256,
-      "characters"
+      background.x+16,
+      background.y+32,
+      "characters",
     );
 
     this.demon = new BigDemon(
       this,
-      284,
-      256,
-      "characters"
+      background.x+(16*3),
+      background.y+(24),
+      "characters",
     );
+    
   }
 
   update(){

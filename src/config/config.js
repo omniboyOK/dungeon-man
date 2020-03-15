@@ -2,14 +2,20 @@ import "phaser";
 
 const config = {
   // How the canvas will be rendered
+  title: "DungeonMan",
   type: Phaser.AUTO,
+  width: 414,
+  heigth: 736,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH
+  },
   pixelArt: true,
-  // The width of our canvas
-  width: 800,
-  // The height of our canvas
-  height: 600,
   // A background color
-  backgroundColor: "black"
+  backgroundColor: "black",
+  dom: {
+    createContainer: false,
+}
 };
 
 export default config;

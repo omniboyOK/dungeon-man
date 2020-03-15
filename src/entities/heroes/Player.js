@@ -7,6 +7,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene = scene;
     //los personajes son 16x16 vamos a usarlos como 32x32
     this.setScale(2, 2);
+    this.camera = this.scene.cameras.main;
+    this.camera.startFollow(this);
+    this.camera.setLerp(0.1, 0.1);
 
     //Animaciones
     this.scene.anims.create({
@@ -77,7 +80,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.play("running");
     this.anims.chain("idle");
   }
-  
+
   //Funciones del jugador
   moveUp() {
     this.playRunningAnimation();
@@ -104,7 +107,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
   update() {
     //Previene al jugador irse fuera de los bordes de la pantalla
     //Cuando la pantalla tenga limites, esto no va a ser necesario
-    this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
-    this.y = Phaser.Math.Clamp(this.y, 0, this.scene.game.config.height);
+    this.x = Phaser.Math.Clamp(
+      this.x,
+      this.scene.game.config.width * 0.5 - 256 + 16,
+      this.scene.game.config.width * 0.5 + 256 - 16
+    );
+    this.y = Phaser.Math.Clamp(
+      this.y,
+      736 * 0.5 - 256 +16,
+      736 * 0.5 + 256 -16
+    );
   }
 }

@@ -3,6 +3,7 @@ import charSheet from "../assets/char/spritesheet.png";
 import charAtlas from "../assets/char/spritesheet.json";
 import tileSheet from "../assets/tiles/spritesheet.png";
 import tileAtlas from "../assets/tiles/spritesheet.json";
+import gesturePlugin from '../scripts/rexgesturesplugin.min.js'
 
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -88,6 +89,12 @@ export default class PreloadScene extends Phaser.Scene {
     // load assets needed in our game
     this.load.atlas("characters", charSheet, charAtlas);
     this.load.atlas("tilesheet", tileSheet, tileAtlas);
+    this.load.scenePlugin({
+      key: "rexgesturesplugin",
+      url:
+        gesturePlugin,
+      sceneKey: "rexGestures"
+    });
   }
 
   create() {}
