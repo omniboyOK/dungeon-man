@@ -1,5 +1,6 @@
 import "phaser";
 import Player from '../entities/heroes/Player';
+import BigDemon from '../entities/monster/BigDemon';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -16,6 +17,13 @@ export default class GameScene extends Phaser.Scene {
     this.player = new Player(
       this,
       256,
+      256,
+      "characters"
+    );
+
+    this.demon = new BigDemon(
+      this,
+      284,
       256,
       "characters"
     );

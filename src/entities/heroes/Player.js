@@ -12,10 +12,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene.anims.create({
       key: "idle",
       frames: [
-        { key: key, frame: "big_demon_idle_anim_f0.png" },
-        { key: key, frame: "big_demon_idle_anim_f1.png" },
-        { key: key, frame: "big_demon_idle_anim_f2.png" },
-        { key: key, frame: "big_demon_idle_anim_f3.png" }
+        { key: key, frame: "knight_f_idle_anim_f0.png" },
+        { key: key, frame: "knight_f_idle_anim_f1.png" },
+        { key: key, frame: "knight_f_idle_anim_f2.png" },
+        { key: key, frame: "knight_f_idle_anim_f3.png" }
       ],
       frameRate: 8,
       repeat: -1
@@ -24,10 +24,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene.anims.create({
       key: "running",
       frames: [
-        { key: key, frame: "big_demon_run_anim_f0.png" },
-        { key: key, frame: "big_demon_run_anim_f1.png" },
-        { key: key, frame: "big_demon_run_anim_f2.png" },
-        { key: key, frame: "big_demon_run_anim_f3.png" }
+        { key: key, frame: "knight_f_run_anim_f0.png" },
+        { key: key, frame: "knight_f_run_anim_f1.png" },
+        { key: key, frame: "knight_f_run_anim_f2.png" },
+        { key: key, frame: "knight_f_run_anim_f3.png" }
       ],
       frameRate: 8,
       repeat: 0
@@ -37,6 +37,16 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.anims.load("running");
 
     this.play('idle');
+
+    // Keyboard refs
+    this.up = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.up.emitOnRepeat = false;
+    this.down = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.down.emitOnRepeat = false;
+    this.left = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.left.emitOnRepeat = false;
+    this.right = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    this.right.emitOnRepeat = false;
 
     // This are the move keys for our player
     this.scene.input.keyboard.on("keydown-W", event => {

@@ -70,7 +70,7 @@ export default class PreloadScene extends Phaser.Scene {
       "complete",
       function() {
         this.time.delayedCall(
-          5000,
+          2000,
           function() {
             progressBar.destroy();
             progressBox.destroy();
