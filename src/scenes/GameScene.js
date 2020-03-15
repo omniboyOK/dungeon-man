@@ -1,6 +1,6 @@
 import "phaser";
-import Player from '../entities/heroes/Player';
-import BigDemon from '../entities/monster/BigDemon';
+import Player from "../entities/heroes/Player";
+import BigDemon from "../entities/monster/BigDemon";
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -8,29 +8,36 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    console.log('Bienvenido a Game') 
+    console.log("Bienvenido a Game");
   }
 
   create() {
-    let background = this.add.tileSprite(this.game.config.width * 0.5, this.game.config.height * 0.5, 256, 256, 'tilesheet', 'floor_1.png')
+    let background = this.add.tileSprite(
+      this.game.config.width * 0.5,
+      this.game.config.height * 0.5,
+      256,
+      256,
+      "tilesheet",
+      "floor_1.png"
+    );
     background.setScale(2, 2);
     this.player = new Player(
       this,
-      background.x+16,
-      background.y+32,
-      "characters",
+      background.x + 16,
+      background.y + 32,
+      "characters"
     );
 
     this.demon = new BigDemon(
       this,
-      background.x+(16*3),
-      background.y+(24),
-      "characters",
+      background.x + 16 * 3,
+      background.y + 24,
+      "characters"
     );
-    
   }
 
-  update(){
-    this.player.update()
+  update() {
+    this.player.update();
+    this.demon.update();
   }
 }

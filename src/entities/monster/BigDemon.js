@@ -87,12 +87,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   update() {
-    //Previene al jugador irse fuera de los bordes de la pantalla
-    //Cuando la pantalla tenga limites, esto no va a ser necesario
     this.x = Phaser.Math.Clamp(
       this.x,
-      this.scene.game.config.width * 0.5 - 256 + 16,
-      this.scene.game.config.width * 0.5 + 256 - 16
+      414 * 0.5 - 256 + 16,
+      414 * 0.5 + 256 - 16
     );
     this.y = Phaser.Math.Clamp(
       this.y,

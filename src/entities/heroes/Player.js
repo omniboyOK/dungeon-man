@@ -133,8 +133,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     //Cuando la pantalla tenga limites, esto no va a ser necesario
     this.x = Phaser.Math.Clamp(
       this.x,
-      this.scene.game.config.width * 0.5 - 256 + 16,
-      this.scene.game.config.width * 0.5 + 256 - 16
+      414 * 0.5 - 256 + 16,
+      414 * 0.5 + 256 - 16
     );
     this.y = Phaser.Math.Clamp(
       this.y,
