@@ -4,7 +4,7 @@ import GesturesPlugin from '../scripts/rexgesturesplugin.min.js'
 const config = {
   // How the canvas will be rendered
   title: "DungeonMan",
-  type: Phaser.AUTO,
+  type: Phaser.CANVAS,
   width: 414,
   heigth: 736,
   scale: {
