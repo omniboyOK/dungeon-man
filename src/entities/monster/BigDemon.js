@@ -40,6 +40,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.scene.add.existing(this);
 
+    //default event
     this.scene.time.addEvent({
       delay: 2000,
       callback: () => {
@@ -53,8 +54,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
             break;
           case 2:
             this.moveRight();
+            break;
           case 3:
             this.moveLeft();
+            break;
         }
       },
       callbackScope: this,
@@ -62,31 +65,41 @@ export default class Player extends Phaser.GameObjects.Sprite {
     });
   }
 
+  switchEvent(event){
+  }
+
   playRunningAnimation() {
     this.play("demon_running");
     this.anims.chain("demon_idle");
+    this.checkBoundaries();
   }
 
   moveUp() {
     this.playRunningAnimation();
     this.y -= 32;
+    this.checkBoundaries();
   }
+
   moveDown() {
     this.playRunningAnimation();
     this.y += 32;
+    this.checkBoundaries();
   }
+
   moveLeft() {
     this.playRunningAnimation();
     this.x -= 32;
     this.flipX = true;
+    this.checkBoundaries();
   }
+
   moveRight() {
     this.playRunningAnimation();
     this.x += 32;
     this.flipX = false;
   }
 
-  update() {
+  checkBoundaries() {
     this.x = Phaser.Math.Clamp(
       this.x,
       414 * 0.5 - 256 + 16,

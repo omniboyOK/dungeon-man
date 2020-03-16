@@ -1,5 +1,5 @@
 import "phaser";
-import GesturesPlugin from '../scripts/rexgesturesplugin.min.js'
+import GesturesPlugin from "../scripts/rexgesturesplugin.min.js";
 
 const config = {
   // How the canvas will be rendered
@@ -16,6 +16,10 @@ const config = {
   backgroundColor: "black",
   dom: {
     createContainer: false
+  },
+  // physics settings
+  physics: {
+    default: "arcade"
   },
   plugins: {
     scene: [

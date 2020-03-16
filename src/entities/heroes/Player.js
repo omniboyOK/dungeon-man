@@ -10,7 +10,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.camera = this.scene.cameras.main;
     this.camera.startFollow(this);
     this.camera.setLerp(0.1, 0.1);
-
     //Animaciones
     this.scene.anims.create({
       key: "idle",
@@ -83,15 +82,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
       .on(
         "swipe",
         swipe => {
-          console.log('swipe swipe')
-          if(swipe.up){
+          console.log("swipe swipe");
+          if (swipe.up) {
             this.moveUp();
-          }else if(swipe.down){
-            this.moveDown()
-          }else if(swipe.left){
-            this.moveLeft()
-          }else if(swipe.right){
-            this.moveRight()
+          } else if (swipe.down) {
+            this.moveDown();
+          } else if (swipe.left) {
+            this.moveLeft();
+          } else if (swipe.right) {
+            this.moveRight();
           }
         },
         this.scene
@@ -109,26 +108,30 @@ export default class Player extends Phaser.GameObjects.Sprite {
   moveUp() {
     this.playRunningAnimation();
     this.y -= 32;
+    this.checkBoundaries();
   }
 
   moveDown() {
     this.playRunningAnimation();
     this.y += 32;
+    this.checkBoundaries();
   }
 
   moveLeft() {
     this.playRunningAnimation();
     this.x -= 32;
     this.flipX = true;
+    this.checkBoundaries();
   }
 
   moveRight() {
     this.playRunningAnimation();
     this.x += 32;
     this.flipX = false;
+    this.checkBoundaries();
   }
 
-  update() {
+  checkBoundaries() {
     //Previene al jugador irse fuera de los bordes de la pantalla
     //Cuando la pantalla tenga limites, esto no va a ser necesario
     this.x = Phaser.Math.Clamp(
