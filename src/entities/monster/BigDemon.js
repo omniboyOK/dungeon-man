@@ -1,12 +1,13 @@
 import Phaser from "phaser";
 
 export default class Player extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y, key, mapWidth, mapHeigth) {
+  constructor(scene, x, y, key, map) {
     super(scene, x, y, key);
     //referenciamos la escena donde creamos el personaje
     this.scene = scene;
-    this.boundX = mapWidth;
-    this.boundY = mapHeigth;
+    this.map = map;
+    this.boundX = map.widthInPixels;
+    this.boundY = map.heightInPixels;
     //los personajes son 16x16 vamos a usarlos como 32x32
     this.setScale(2, 2);
 

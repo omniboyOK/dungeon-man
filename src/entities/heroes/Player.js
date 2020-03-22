@@ -1,12 +1,14 @@
 import Phaser from "phaser";
 
 export default class Player extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y, key, mapWidth, mapHeigth) {
+  constructor(scene, x, y, key, map, collisionLayer) {
     super(scene, x, y, key);
     //referenciamos la escena donde creamos el personaje
     this.scene = scene;
-    this.boundX = mapWidth;
-    this.boundY = mapHeigth;
+    this.map = map;
+    this.layer = collisionLayer;
+    this.boundX = map.widthInPixels;
+    this.boundY = map.heightInPixels;
     //los personajes son 16x16 vamos a usarlos como 32x32
     this.setScale(2, 2);
     this.camera = this.scene.cameras.main;
@@ -108,30 +110,53 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   //Funciones del jugador
   moveUp() {
+    var tile = this.layer.getTileAtWorldXY(this.x, this.y - 32, true);
+
     this.playRunningAnimation();
-    this.y -= 32;
-    this.checkBoundaries();
+    if (tile.properties.block) {
+    } else {
+      this.y -= 32;
+      this.checkBoundaries();
+    }
   }
 
   moveDown() {
+    var tile = this.layer.getTileAtWorldXY(this.x, this.y + 32, true);
+
     this.playRunningAnimation();
-    this.y += 32;
-    this.checkBoundaries();
+    if (tile.properties.block) {
+      //  Blocked, we can't move
+    } else {
+      this.y += 32;
+      this.checkBoundaries();
+    }
   }
 
   moveLeft() {
+    var tile = this.layer.getTileAtWorldXY(this.x - 32, this.y, true);
+
     this.playRunningAnimation();
-    this.x -= 32;
     this.flipX = true;
-    this.checkBoundaries();
+    if (tile.properties.block) {
+    } else {
+      this.x -= 32;
+      this.checkBoundaries();
+    }
   }
 
   moveRight() {
+    var tile = this.layer.getTileAtWorldXY(this.x + 32, this.y, true);
+
     this.playRunningAnimation();
-    this.x += 32;
     this.flipX = false;
-    this.checkBoundaries();
+    if (tile.properties.block) {
+    } else {
+      this.x += 32;
+      this.checkBoundaries();
+    }
   }
+
+  checkCollision() {}
 
   checkBoundaries() {
     //Previene al jugador irse fuera de los bordes de la pantalla
