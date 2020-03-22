@@ -1,11 +1,12 @@
 import Phaser from "phaser";
 
 export default class Player extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y, key, map) {
+  constructor(scene, x, y, key, map, collisionLayer) {
     super(scene, x, y, key);
     //referenciamos la escena donde creamos el personaje
     this.scene = scene;
     this.map = map;
+    this.layer = collisionLayer;
     this.boundX = map.widthInPixels;
     this.boundY = map.heightInPixels;
     //los personajes son 16x16 vamos a usarlos como 32x32
@@ -77,28 +78,58 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   moveUp() {
+    let tile = this.layer.getTileAtWorldXY(this.x, this.y - 32, true)
+      ? this.layer.getTileAtWorldXY(this.x, this.y - 32, true)
+      : { properties: { block: true } };
+
     this.playRunningAnimation();
-    this.y -= 32;
-    this.checkBoundaries();
+    if (tile.properties.block) {
+    } else {
+      this.y -= 32;
+      this.checkBoundaries();
+    }
   }
 
   moveDown() {
+    let tile = this.layer.getTileAtWorldXY(this.x, this.y + 32, true)
+      ? this.layer.getTileAtWorldXY(this.x, this.y + 32, true)
+      : { properties: { block: true } };
+
     this.playRunningAnimation();
-    this.y += 32;
-    this.checkBoundaries();
+    if (tile.properties.block) {
+      //  Blocked, we can't move
+    } else {
+      this.y += 32;
+      this.checkBoundaries();
+    }
   }
 
   moveLeft() {
+    let tile = this.layer.getTileAtWorldXY(this.x - 32, this.y, true)
+      ? this.layer.getTileAtWorldXY(this.x - 32, this.y, true)
+      : { properties: { block: true } };
+
     this.playRunningAnimation();
-    this.x -= 32;
     this.flipX = true;
-    this.checkBoundaries();
+    if (tile.properties.block) {
+    } else {
+      this.x -= 32;
+      this.checkBoundaries();
+    }
   }
 
   moveRight() {
+    let tile = this.layer.getTileAtWorldXY(this.x + 32, this.y, true)
+      ? this.layer.getTileAtWorldXY(this.x + 32, this.y, true)
+      : { properties: { block: true } };
+
     this.playRunningAnimation();
-    this.x += 32;
     this.flipX = false;
+    if (tile.properties.block) {
+    } else {
+      this.x += 32;
+      this.checkBoundaries();
+    }
   }
 
   checkBoundaries() {

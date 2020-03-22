@@ -110,7 +110,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   //Funciones del jugador
   moveUp() {
-    var tile = this.layer.getTileAtWorldXY(this.x, this.y - 32, true);
+    let tile = this.layer.getTileAtWorldXY(this.x, this.y - 32, true)
+      ? this.layer.getTileAtWorldXY(this.x, this.y - 32, true)
+      : { properties: { block: true } };
 
     this.playRunningAnimation();
     if (tile.properties.block) {
@@ -121,7 +123,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   moveDown() {
-    var tile = this.layer.getTileAtWorldXY(this.x, this.y + 32, true);
+    let tile = this.layer.getTileAtWorldXY(this.x, this.y + 32, true)
+      ? this.layer.getTileAtWorldXY(this.x, this.y + 32, true)
+      : { properties: { block: true } };
 
     this.playRunningAnimation();
     if (tile.properties.block) {
@@ -133,7 +137,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   moveLeft() {
-    var tile = this.layer.getTileAtWorldXY(this.x - 32, this.y, true);
+    let tile = this.layer.getTileAtWorldXY(this.x - 32, this.y, true)
+      ? this.layer.getTileAtWorldXY(this.x - 32, this.y, true)
+      : { properties: { block: true } };
 
     this.playRunningAnimation();
     this.flipX = true;
@@ -145,7 +151,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   moveRight() {
-    var tile = this.layer.getTileAtWorldXY(this.x + 32, this.y, true);
+    let tile = this.layer.getTileAtWorldXY(this.x + 32, this.y, true)
+      ? this.layer.getTileAtWorldXY(this.x + 32, this.y, true)
+      : { properties: { block: true } };
 
     this.playRunningAnimation();
     this.flipX = false;
@@ -155,8 +163,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
       this.checkBoundaries();
     }
   }
-
-  checkCollision() {}
 
   checkBoundaries() {
     //Previene al jugador irse fuera de los bordes de la pantalla
