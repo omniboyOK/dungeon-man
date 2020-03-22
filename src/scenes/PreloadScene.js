@@ -3,6 +3,7 @@ import charSheet from "../assets/char/spritesheet.png";
 import charAtlas from "../assets/char/spritesheet.json";
 import tiles from "../assets/tiles/spritesheetx32.png";
 import level1JSON from "../assets/tiles/level1.json";
+import basicLevel from "../assets/tiles/basicLevel.json";
 
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -89,6 +90,7 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.atlas("characters", charSheet, charAtlas);
     this.load.image("tiles", tiles);
     this.load.tilemapTiledJSON("level1", level1JSON);
+    this.load.tilemapTiledJSON("basicLevel", basicLevel);
   }
 
   create() {}

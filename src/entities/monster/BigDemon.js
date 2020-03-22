@@ -9,6 +9,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.layer = collisionLayer;
     this.boundX = map.widthInPixels;
     this.boundY = map.heightInPixels;
+
     //los personajes son 16x16 vamos a usarlos como 32x32
     this.setScale(2, 2);
 
@@ -46,7 +47,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     //default event
     this.scene.time.addEvent({
-      delay: 2000,
+      delay: 500,
       callback: () => {
         let randomNumber = Math.floor(Math.random() * 4);
         switch (randomNumber) {
@@ -78,8 +79,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   moveUp() {
-    let tile = this.layer.getTileAtWorldXY(this.x, this.y - 32, true)
-      ? this.layer.getTileAtWorldXY(this.x, this.y - 32, true)
+    let tile = this.layer.getTileAtWorldXY(this.x, this.y, true)
+      ? this.layer.getTileAtWorldXY(this.x, this.y, true)
       : { properties: { block: true } };
 
     this.playRunningAnimation();
@@ -91,8 +92,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   moveDown() {
-    let tile = this.layer.getTileAtWorldXY(this.x, this.y + 32, true)
-      ? this.layer.getTileAtWorldXY(this.x, this.y + 32, true)
+    let tile = this.layer.getTileAtWorldXY(this.x, this.y + 64, true)
+      ? this.layer.getTileAtWorldXY(this.x, this.y + 64, true)
       : { properties: { block: true } };
 
     this.playRunningAnimation();
@@ -105,8 +106,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   moveLeft() {
-    let tile = this.layer.getTileAtWorldXY(this.x - 32, this.y, true)
-      ? this.layer.getTileAtWorldXY(this.x - 32, this.y, true)
+    let tile = this.layer.getTileAtWorldXY(this.x - 32, this.y - 32, true)
+      ? this.layer.getTileAtWorldXY(this.x - 32, this.y -32, true)
       : { properties: { block: true } };
 
     this.playRunningAnimation();
@@ -119,8 +120,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   moveRight() {
-    let tile = this.layer.getTileAtWorldXY(this.x + 32, this.y, true)
-      ? this.layer.getTileAtWorldXY(this.x + 32, this.y, true)
+    let tile = this.layer.getTileAtWorldXY(this.x + 32, this.y - 32, true)
+      ? this.layer.getTileAtWorldXY(this.x + 32, this.y -32, true)
       : { properties: { block: true } };
 
     this.playRunningAnimation();

@@ -17,13 +17,6 @@ const config = {
   dom: {
     createContainer: false
   },
-  // physics settings
-  physics: {
-    default: "arcade",
-    arcade: {
-      gravity: { y: 0 } // Top down game, so no gravity
-    }
-  },
   plugins: {
     scene: [
       {
