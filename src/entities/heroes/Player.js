@@ -138,5 +138,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     //Cuando la pantalla tenga limites, esto no va a ser necesario
     this.x = Phaser.Math.Clamp(this.x, 16, this.boundX - 16);
     this.y = Phaser.Math.Clamp(this.y, 0, this.boundY - 32);
+    this.depth = this.y + this.height / 2;
   }
 }

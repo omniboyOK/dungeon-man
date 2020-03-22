@@ -38,7 +38,7 @@ export default class GameScene extends Phaser.Scene {
     this.demon = new BigDemon(
       this,
       48,
-      32,
+      24,
       "characters",
       map.widthInPixels,
       map.heightInPixels
@@ -50,10 +50,9 @@ export default class GameScene extends Phaser.Scene {
       collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
       faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
     });
-
-    // This will watch the player and worldLayer every frame to check for collisions
-    this.physics.add.collider(this.player, worldLayer);
   }
 
-  update() {}
+  update() {
+    
+  }
 }
