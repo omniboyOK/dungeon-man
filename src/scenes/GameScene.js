@@ -22,6 +22,7 @@ export default class GameScene extends Phaser.Scene {
     // Parameters: layer name (or index) from Tiled, tileset, x, y
     const belowLayer = map.createStaticLayer("Ground", tileset, 0, 0);
     const worldLayer = map.createStaticLayer("Walls", tileset, 0, 0);
+    const deepLayer = map.createStaticLayer("Free fall", tileset, 0, 0);
 
     // The 13th tile through and including the 45th tile will be marked as colliding
     map.setCollisionByProperty({ collides: true })
