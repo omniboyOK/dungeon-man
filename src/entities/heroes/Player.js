@@ -126,7 +126,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     let tile = this.layer.getTileAtWorldXY(this.x, this.y + 32, true)
       ? this.layer.getTileAtWorldXY(this.x, this.y + 32, true)
       : { properties: { block: true } };
-
+      
     this.playRunningAnimation();
     if (tile.properties.block) {
       //  Blocked, we can't move

@@ -23,7 +23,10 @@ export default class GameScene extends Phaser.Scene {
     const worldLayer = map.createStaticLayer("Walls", tileset, 0, 0);
     const upperLayer = map.createStaticLayer("Overhead", tileset, 0, 0);
 
+
     this.player = new Player(this, 48, 96, "characters", map, worldLayer);
+
+    upperLayer.setDepth(map.heightInPixels)
 
     this.demon = new BigDemon(this, 16*13 + 32, 16*5, "characters", map, worldLayer);
   }
