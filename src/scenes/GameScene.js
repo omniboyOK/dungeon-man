@@ -12,30 +12,47 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    let background = this.add.tileSprite(
-      this.game.config.width * 0.5,
-      this.game.config.height * 0.5,
-      256,
-      256,
-      "tilesheet",
-      "floor_1.png"
-    );
-    background.setScale(2, 2);
+    const map = this.make.tilemap({ key: "level1" });
+    console.log(map.widthInPixels);
+
+    // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
+    // Phaser's cache (i.e. the name you used in preload)
+    const tileset = map.addTilesetImage("dungeon", "tiles");
+
+    // Parameters: layer name (or index) from Tiled, tileset, x, y
+    const belowLayer = map.createStaticLayer("Ground", tileset, 0, 0);
+    const worldLayer = map.createStaticLayer("Walls", tileset, 0, 0);
+
+    // The 13th tile through and including the 45th tile will be marked as colliding
+    map.setCollisionByProperty({ collides: true })
     this.player = new Player(
       this,
-      background.x + 16,
-      background.y + 32,
-      "characters"
+      16,
+      32,
+      "characters",
+      map.widthInPixels,
+      map.heightInPixels
     );
 
     this.demon = new BigDemon(
       this,
-      background.x + 16 * 3,
-      background.y + 24,
-      "characters"
+      48,
+      32,
+      "characters",
+      map.widthInPixels,
+      map.heightInPixels
     );
+
+    const debugGraphics = this.add.graphics().setAlpha(0.50);
+    map.renderDebug(debugGraphics, {
+      tileColor: null, // Color of non-colliding tiles
+      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+    });
+
+    // This will watch the player and worldLayer every frame to check for collisions
+    this.physics.add.collider(this.player, worldLayer);
   }
 
-  update() {
-  }
+  update() {}
 }

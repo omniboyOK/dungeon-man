@@ -1,10 +1,12 @@
 import Phaser from "phaser";
 
 export default class Player extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y, key) {
+  constructor(scene, x, y, key, mapWidth, mapHeigth) {
     super(scene, x, y, key);
     //referenciamos la escena donde creamos el personaje
     this.scene = scene;
+    this.boundX = mapWidth;
+    this.boundY = mapHeigth;
     //los personajes son 16x16 vamos a usarlos como 32x32
     this.setScale(2, 2);
 
@@ -65,8 +67,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     });
   }
 
-  switchEvent(event){
-  }
+  switchEvent(event) {}
 
   playRunningAnimation() {
     this.play("demon_running");
@@ -100,15 +101,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
 
   checkBoundaries() {
-    this.x = Phaser.Math.Clamp(
-      this.x,
-      414 * 0.5 - 256 + 16,
-      414 * 0.5 + 256 - 16
-    );
-    this.y = Phaser.Math.Clamp(
-      this.y,
-      736 * 0.5 - 256 + 16,
-      736 * 0.5 + 256 - 16
-    );
+    //Previene al jugador irse fuera de los bordes de la pantalla
+    //Cuando la pantalla tenga limites, esto no va a ser necesario
+    this.x = Phaser.Math.Clamp(this.x, 16, this.boundX - 16);
+    this.y = Phaser.Math.Clamp(this.y, 0, this.boundY - 32);
   }
 }

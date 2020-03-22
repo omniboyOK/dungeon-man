@@ -1,9 +1,8 @@
 import "phaser";
 import charSheet from "../assets/char/spritesheet.png";
 import charAtlas from "../assets/char/spritesheet.json";
-import tileSheet from "../assets/tiles/spritesheet.png";
-import tileAtlas from "../assets/tiles/spritesheet.json";
-import gesturePlugin from '../scripts/rexgesturesplugin.min.js'
+import tiles from "../assets/tiles/spritesheetx32.png";
+import level1JSON from "../assets/tiles/level1.json";
 
 export default class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -16,7 +15,7 @@ export default class PreloadScene extends Phaser.Scene {
     var progressBar = this.add.graphics();
     var progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(50, 270, this.game.config.width / 2 +100, 50);
+    progressBox.fillRect(50, 270, this.game.config.width / 2 + 100, 50);
 
     var width = this.cameras.main.width;
     var height = this.cameras.main.height;
@@ -88,7 +87,8 @@ export default class PreloadScene extends Phaser.Scene {
 
     // load assets needed in our game
     this.load.atlas("characters", charSheet, charAtlas);
-    this.load.atlas("tilesheet", tileSheet, tileAtlas);
+    this.load.image("tiles", tiles);
+    this.load.tilemapTiledJSON("level1", level1JSON);
   }
 
   create() {}
