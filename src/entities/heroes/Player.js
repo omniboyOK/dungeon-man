@@ -1,20 +1,29 @@
 import Phaser from "phaser";
+import Bomb from "../objects/bomb";
 
 export default class Player extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, map, collisionLayer) {
     super(scene, x, y, key);
-    //referenciamos la escena donde creamos el personaje
+
+    // ---- Map references
     this.scene = scene;
     this.map = map;
+    // ---- This references the "Walls" layer that contains solid blocks
     this.layer = collisionLayer;
+    // -- This set the map bounds for this entity
     this.boundX = map.widthInPixels;
     this.boundY = map.heightInPixels;
-    //los personajes son 16x16 vamos a usarlos como 32x32
+
+    // ---- Assets are 32x32, we scale but may create custom sprisheet later
     this.setScale(2, 2);
+
+    // ---- The Main camera, will follow the hero with smooth delay
     this.camera = this.scene.cameras.main;
     this.camera.startFollow(this);
     this.camera.setLerp(0.1, 0.1);
-    //Animaciones
+
+    // ---- Animations
+    // ---- Idle animation
     this.scene.anims.create({
       key: "idle",
       frames: [
@@ -26,6 +35,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       frameRate: 8,
       repeat: -1
     });
+    // ---- Running animation
     this.scene.anims.create({
       key: "running",
       frames: [
@@ -37,31 +47,48 @@ export default class Player extends Phaser.GameObjects.Sprite {
       frameRate: 8,
       repeat: 0
     });
-    //cargamos las animaciones al personaje
+    // ---- Jump animation
+    this.scene.anims.create({
+      key: "jump",
+      frames: [
+        { key: key, frame: "knight_f_hit_anim_f0.png" },
+        { key: key, frame: "knight_f_hit_anim_f0.png" }
+      ],
+      frameRate: 8,
+      repeat: 0
+    });
+
+    // ---- We load animations
     this.anims.load("idle");
     this.anims.load("running");
-
+    // ---- Set initial animation
     this.play("idle");
 
-    // Keyboard refs
+    // ---- Keyboard referencies, this is for accessing properties
     this.up = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.W
     );
-    this.up.emitOnRepeat = false;
     this.down = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.S
     );
-    this.down.emitOnRepeat = false;
     this.left = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.A
     );
-    this.left.emitOnRepeat = false;
     this.right = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.D
     );
-    this.right.emitOnRepeat = false;
+    this.space = this.scene.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE
+    );
 
-    // This are the move keys for our player
+    // ---- This prevents multiple inputs when holding the button
+    this.up.emitOnRepeat = false;
+    this.down.emitOnRepeat = false;
+    this.left.emitOnRepeat = false;
+    this.right.emitOnRepeat = false;
+    this.space.emitOnRepeat = false;
+
+    // ---- This are the events binded to our player keys
     this.scene.input.keyboard.on("keydown-W", event => {
       this.moveUp();
     });
@@ -74,9 +101,16 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene.input.keyboard.on("keydown-D", event => {
       this.moveRight();
     });
+    this.scene.input.keyboard.on("keydown-SPACE", event => {
+      this.putBomb();
+    });
+
+    // ---- This add this graphic element and it's properties to the scene
+    // It's important, as the entity has been declared but not added -- //
     this.scene.add.existing(this);
 
-    //touch inputs
+    // ---- Mobile Handling
+    // ---- Touch Inputs for Mobile
     this.scene.rexGestures.add
       .swipe({
         enable: true,
@@ -86,7 +120,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
       .on(
         "swipe",
         swipe => {
-          console.log("swipe swipe");
           if (swipe.up) {
             this.moveUp();
           } else if (swipe.down) {
@@ -101,14 +134,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
       );
   }
 
-  //Manejo de animaciones
-  //Hay que crear un manejador de estados que se encargue
+  // ---- Animation manager
+  // ---- We need a FMS that take care of this for larger sprites
   playRunningAnimation() {
     this.play("running");
     this.anims.chain("idle");
   }
 
-  //Funciones del jugador
+  // ---- Player functions
+  // ---- Moving Up
   moveUp() {
     let tile = this.layer.getTileAtWorldXY(this.x, this.y - 32, true)
       ? this.layer.getTileAtWorldXY(this.x, this.y - 32, true)
@@ -116,12 +150,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.playRunningAnimation();
     if (tile.properties.block) {
+      // Do Nothing
     } else {
       this.y -= 32;
       this.checkBoundaries();
     }
   }
-
+  // ---- Moving Down
   moveDown() {
     let tile = this.layer.getTileAtWorldXY(this.x, this.y + 32, true)
       ? this.layer.getTileAtWorldXY(this.x, this.y + 32, true)
@@ -129,13 +164,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.playRunningAnimation();
     if (tile.properties.block) {
-      //  Blocked, we can't move
+      // Do Nothing
     } else {
       this.y += 32;
       this.checkBoundaries();
     }
   }
-
+  // ---- Moving Left
   moveLeft() {
     let tile = this.layer.getTileAtWorldXY(this.x - 32, this.y, true)
       ? this.layer.getTileAtWorldXY(this.x - 32, this.y, true)
@@ -144,31 +179,37 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.playRunningAnimation();
     this.flipX = true;
     if (tile.properties.block) {
+      // Do Nothing
     } else {
       this.x -= 32;
       this.checkBoundaries();
     }
   }
-
+  // ---- Moving Right
   moveRight() {
     let tile = this.layer.getTileAtWorldXY(this.x + 32, this.y, true)
       ? this.layer.getTileAtWorldXY(this.x + 32, this.y, true)
       : { properties: { block: true } };
-
     this.playRunningAnimation();
     this.flipX = false;
     if (tile.properties.block) {
+      // Do Nothing
     } else {
       this.x += 32;
       this.checkBoundaries();
     }
   }
+  // ---- The player create a bomb
+  putBomb() {
+    let bomb = new Bomb(this.scene, this.x, this.y, this.texture);
+  }
 
+  // ---- Other
+  // ---- With the bounds from the entity, it prevents falling outside the map.
   checkBoundaries() {
-    //Previene al jugador irse fuera de los bordes de la pantalla
-    //Cuando la pantalla tenga limites, esto no va a ser necesario
     this.x = Phaser.Math.Clamp(this.x, 16, this.boundX - 16);
     this.y = Phaser.Math.Clamp(this.y, 0, this.boundY - 32);
     this.depth = this.y + this.height / 2;
   }
+
 }

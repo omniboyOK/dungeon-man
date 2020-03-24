@@ -27,7 +27,8 @@ export default class BootScene extends Phaser.Scene {
   }
 
   create() {
-    console.log("yendo a preload");
+    // ---- [debug] For debbuging purposes
+    console.log("Moving to Preload");
     this.add.sprite(this.game.config.width * 0.5, this.game.config.height * 0.5, "bootLogo");
   }
 }

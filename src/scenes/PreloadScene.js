@@ -11,7 +11,6 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
-    console.log("Bienvenido a Preload");
     // barra de progeso
     var progressBar = this.add.graphics();
     var progressBox = this.add.graphics();
@@ -93,7 +92,10 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.tilemapTiledJSON("basicLevel", basicLevel);
   }
 
-  create() {}
+  create() {
+    // ---- [debug] For debbuging purposes
+    console.log("Welcome to Preload");
+  }
 
   init() {
     this.readyCount = 0;

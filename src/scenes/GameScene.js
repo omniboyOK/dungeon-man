@@ -8,27 +8,33 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    console.log("Bienvenido a Game");
+    // ---- [debug] For debbuging purposes
+    console.log("Welcome to Game");
   }
 
   create() {
+    // TILEMAP
+    // ---- Tilemap made with preloaded JSON
     const map = this.make.tilemap({ key: "basicLevel" });
-
-    // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
-    // Phaser's cache (i.e. the name you used in preload)
+    // -- Adding graphic to the tilemap, referencing the Tiled
+    // scenary (dungeon) and the spritesheet key (tiles) -- //
     const tileset = map.addTilesetImage("dungeon", "tiles");
-
-    // Parameters: layer name (or index) from Tiled, tileset, x, y
+    // ---- Parameters: layer name (or index) from Tiled, tileset, x, y
     const belowLayer = map.createStaticLayer("Ground", tileset, 0, 0);
     const worldLayer = map.createStaticLayer("Walls", tileset, 0, 0);
     const upperLayer = map.createStaticLayer("Overhead", tileset, 0, 0);
-
-
-    this.player = new Player(this, 48, 96, "characters", map, worldLayer);
-
+    // ---- Setting Overlapping layer with the maximun depth
+    // so it always shows over all dinamic entities ---- //
     upperLayer.setDepth(map.heightInPixels)
 
+    // ENTITIES
+    // ---- All entity groups
+
+    // ---- All created entities
+    this.player = new Player(this, 48, 96, "characters", map, worldLayer);
     this.demon = new BigDemon(this, 16*13 + 32, 16*5, "characters", map, worldLayer);
+
+    
   }
 
   update() {}
