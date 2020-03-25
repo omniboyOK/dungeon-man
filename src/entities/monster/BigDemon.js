@@ -3,17 +3,20 @@ import Phaser from "phaser";
 export default class Player extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, map, collisionLayer) {
     super(scene, x, y, key);
-    //referenciamos la escena donde creamos el personaje
+    // ---- Map references
     this.scene = scene;
     this.map = map;
+    // ---- This references the "Walls" layer that contains solid blocks
     this.layer = collisionLayer;
+    // -- This set the map bounds for this entity
     this.boundX = map.widthInPixels;
     this.boundY = map.heightInPixels;
 
-    //los personajes son 16x16 vamos a usarlos como 32x32
+    // ---- Assets are 32x32, we scale but may create custom sprisheet later
     this.setScale(2, 2);
 
-    //Animaciones
+    // ---- Animations
+    // ---- Idle animation
     this.scene.anims.create({
       key: "demon_idle",
       frames: [
@@ -25,7 +28,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
       frameRate: 8,
       repeat: -1
     });
-
+    // ---- Running animation
     this.scene.anims.create({
       key: "demon_running",
       frames: [
@@ -37,17 +40,23 @@ export default class Player extends Phaser.GameObjects.Sprite {
       frameRate: 8,
       repeat: 0
     });
-
+    // ---- We load animations
     this.anims.load("demon_idle");
     this.anims.load("demon_running");
-
+    // ---- Set initial animation
     this.play("demon_idle");
 
+    // ---- This add this graphic element and it's properties to the scene
+    // It's important, as the entity has been declared but not added -- //
     this.scene.add.existing(this);
+    this.scene.physics.add.existing(this, 0);
+    // ---- physic body --//
+    this.body.setSize(10, 10);
+    this.body.setOffset(12, 26);
 
     //default event
     this.scene.time.addEvent({
-      delay: 500,
+      delay: 1500,
       callback: () => {
         let randomNumber = Math.floor(Math.random() * 4);
         switch (randomNumber) {
@@ -107,7 +116,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   moveLeft() {
     let tile = this.layer.getTileAtWorldXY(this.x - 32, this.y - 32, true)
-      ? this.layer.getTileAtWorldXY(this.x - 32, this.y -32, true)
+      ? this.layer.getTileAtWorldXY(this.x - 32, this.y - 32, true)
       : { properties: { block: true } };
 
     this.playRunningAnimation();
@@ -121,7 +130,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
   moveRight() {
     let tile = this.layer.getTileAtWorldXY(this.x + 32, this.y - 32, true)
-      ? this.layer.getTileAtWorldXY(this.x + 32, this.y -32, true)
+      ? this.layer.getTileAtWorldXY(this.x + 32, this.y - 32, true)
       : { properties: { block: true } };
 
     this.playRunningAnimation();

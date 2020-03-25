@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import Bomb from "../objects/bomb";
 
-export default class Player extends Phaser.GameObjects.Sprite {
+export default class Entity extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, map, collisionLayer) {
     super(scene, x, y, key);
     // ---- Map references
@@ -12,7 +12,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     // -- This set the map bounds for this entity
     this.boundX = map.widthInPixels;
     this.boundY = map.heightInPixels;
-    
+
     // ---- Assets are 32x32, we scale but may create custom sprisheet later
     this.setScale(2, 2);
 
@@ -106,11 +106,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     // ---- This add this graphic element and it's properties to the scene
     // It's important, as the entity has been declared but not added -- //
-    this.scene.add.existing(this)
-    // ---- physic body --//
-    this.scene.physics.add.existing(this, 0);
-    this.body.setSize(10, 10)
-    this.body.setOffset(4, 16)
+    this.scene.add.existing(this);
 
     // ---- Mobile Handling
     // ---- Touch Inputs for Mobile
