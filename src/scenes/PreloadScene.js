@@ -1,6 +1,8 @@
 import "phaser";
 import charSheet from "../assets/char/spritesheet.png";
 import charAtlas from "../assets/char/spritesheet.json";
+import projectilesSheet from "../assets/char/projectiles.png";
+import projectilesAtlas from "../assets/char/projectiles.json"
 import tiles from "../assets/tiles/spritesheetx32.png";
 import level1JSON from "../assets/tiles/level1.json";
 import basicLevel from "../assets/tiles/basicLevel.json";
@@ -87,6 +89,7 @@ export default class PreloadScene extends Phaser.Scene {
 
     // load assets needed in our game
     this.load.atlas("characters", charSheet, charAtlas);
+    this.load.atlas("projectiles", projectilesSheet, projectilesAtlas);
     this.load.image("tiles", tiles);
     this.load.tilemapTiledJSON("level1", level1JSON);
     this.load.tilemapTiledJSON("basicLevel", basicLevel);

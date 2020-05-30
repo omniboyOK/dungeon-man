@@ -12,6 +12,23 @@ export default class Player extends Phaser.GameObjects.Sprite {
     // -- This set the map bounds for this entity
     this.boundX = map.widthInPixels;
     this.boundY = map.heightInPixels;
+
+    // ---- Custom entity properties
+    this.bag = {
+      maxBombs: 2,
+      bombs: 2
+    }
+    // -- This refresh the bombs in the bag
+    this.scene.time.addEvent({
+      delay: 2000,
+      callback: () => {
+        if(this.bag.bombs < this.bag.maxBombs){
+          this.bag.bombs += 1
+        }
+      },
+      callbackScope: this,
+      loop: true
+    });
     
     // ---- Assets are 32x32, we scale but may create custom sprisheet later
     this.setScale(2, 2);
@@ -204,7 +221,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
   // ---- The player create a bomb
   putBomb() {
-    let bomb = new Bomb(this.scene, this.x, this.y+4, this.texture);
+    if(this.bag.bombs > 0){
+      let bomb = new Bomb(this.scene, this.x, this.y+4, 'projectiles');
+      this.bag.bombs -= 1;
+    }
   }
 
   // ---- Other
