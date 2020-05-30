@@ -1,5 +1,5 @@
 import "phaser";
-import GesturesPlugin from "../scripts/rexgesturesplugin.min.js";
+import GesturesPlugin from "../scripts/gesturePlugin.min.js";
 
 const config = {
   // How the canvas will be rendered

@@ -204,7 +204,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
   }
   // ---- The player create a bomb
   putBomb() {
-    let bomb = new Bomb(this.scene, this.x, this.y, this.texture);
+    let bomb = new Bomb(this.scene, this.x, this.y+4, this.texture);
   }
 
   // ---- Other

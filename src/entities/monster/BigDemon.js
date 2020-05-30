@@ -52,7 +52,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this, 0);
     // ---- physic body --//
     this.body.setSize(10, 10);
-    this.body.setOffset(12, 26);
+    this.body.setOffset(12, 28);
 
     //default event
     this.scene.time.addEvent({
