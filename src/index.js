@@ -1,4 +1,4 @@
-import "phaser";
+import 'phaser';
 import config from "./config/config";
 import PreloadScene from "./scenes/PreloadScene";
 import CreditsScene from "./scenes/CreditsScene";
